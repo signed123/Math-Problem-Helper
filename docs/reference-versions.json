@@ -1,0 +1,41 @@
+{
+  "reference_projects": [
+    {
+      "name": "RikkaHub",
+      "repository": "https://github.com/rikkahub/rikkahub",
+      "commit": "a046505a62edd876da4e5f5c77a01332c1649ae7",
+      "license_declaration": "AGPL-3.0"
+    },
+    {
+      "name": "Math_Tutor_RAG",
+      "repository": "https://github.com/lii-lii321/Math_Tutor_RAG",
+      "commit": "35f5bfacb72563ee6b78a4b1623c76fae189da61",
+      "license_declaration": "MIT"
+    },
+    {
+      "name": "Socratic Tutor",
+      "repository": "https://github.com/utsabpanta/ai-tutoring",
+      "commit": "87e93f159c4feb14acc1a3f8503173958e9fdbf8",
+      "license_declaration": "MIT"
+    },
+    {
+      "name": "Symly.ai",
+      "repository": "https://github.com/davernlon/symly.ai",
+      "commit": "5091dec8c9b217b4f46d3e26dd00606c50755154",
+      "license_declaration": "MIT"
+    },
+    {
+      "name": "Kelivo",
+      "repository": "https://github.com/Chevey339/kelivo",
+      "commit": "d4752260adb1ca959422c4baa01485d80cfcad04",
+      "license_declaration": "AGPL-3.0"
+    },
+    {
+      "name": "MathVoice",
+      "repository": "https://github.com/llSourcell/mathvoice",
+      "commit": "9b3ce8ab04cd128dfa1dfa691e1b8b766d650ed5",
+      "license_declaration": "README 声明 MIT；无独立许可证文件"
+    }
+  ],
+  "usage": "研究实现机制；本工程未复制参考仓库的业务代码。"
+}

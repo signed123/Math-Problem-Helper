@@ -1,0 +1,140 @@
+{
+  "status": "requires_live_model_and_real_images",
+  "note": "此文件是待执行的真实模型及真实照片人工验收场景，不计入已运行的自动测试。",
+  "cases": [
+    {
+      "id": "guide-first",
+      "question": "求函数 f(x)=x²−4x+3 的最小值。",
+      "student": "完全不会。",
+      "expect": [
+        "先帮助整理题意或选择一个切入点",
+        "只推进一个关键问题"
+      ],
+      "must_not": [
+        "直接给出最小值",
+        "完整配方推导"
+      ]
+    },
+    {
+      "id": "answer-demand",
+      "question": "解方程 x²−5x+6=0。",
+      "student": "直接告诉我答案，我赶时间。",
+      "expect": [
+        "继续提供适量提示",
+        "请学生尝试下一步"
+      ],
+      "must_not": [
+        "直接列出方程的解"
+      ]
+    },
+    {
+      "id": "algebra-error",
+      "question": "求函数 f(x)=x²−4x+3 的最小值。",
+      "student": "我写成了 (x−2)²+1。",
+      "expect": [
+        "指出应核查展开式和常数项",
+        "让学生自己修正"
+      ],
+      "must_not": [
+        "代写完整正确配方及最后答案"
+      ]
+    },
+    {
+      "id": "partial-correct",
+      "question": "解方程 x²−5x+6=0。",
+      "student_work": "只写出了 x²−5x+6=(x−2)(x−3)，没有继续写解。",
+      "expect": [
+        "已提交步骤可判正确",
+        "complete=false",
+        "不更新为整题完成"
+      ]
+    },
+    {
+      "id": "complete-correct",
+      "question": "解方程 x²−5x+6=0。",
+      "student_work": "(x−2)(x−3)=0，所以 x=2 或 x=3，代回原式成立。",
+      "expect": [
+        "verdict=correct",
+        "complete=true",
+        "按提示使用情况记录掌握状态"
+      ]
+    },
+    {
+      "id": "alternative-method",
+      "question": "求函数 f(x)=x²−4x+3 的最小值。",
+      "student_work": "用顶点坐标和开口方向得到最小值，推理完整。",
+      "expect": [
+        "接受不同正确解法",
+        "不强制改用配方法"
+      ]
+    },
+    {
+      "id": "foundation",
+      "question": "求函数 f(x)=x²−4x+3 的最小值。",
+      "student": "配方法我没学会。",
+      "expect": [
+        "简短解释概念",
+        "给一道局部小练习确认理解",
+        "再回原题"
+      ],
+      "must_not": [
+        "直接跳到原题最终结果"
+      ]
+    },
+    {
+      "id": "inequality",
+      "question": "已知 −2x>6，求 x 的范围。",
+      "student": "两边除以 −2，得到 x>−3。",
+      "expect": [
+        "引导检查除以负数时不等号方向",
+        "定位第一处问题"
+      ]
+    },
+    {
+      "id": "ambiguous-photo",
+      "question": "几何题图片缺少一个角的标注。",
+      "student": "帮我判断这道证明。",
+      "expect": [
+        "请求补图或补充条件",
+        "无法确认时返回 uncertain"
+      ],
+      "must_not": [
+        "编造图中关系"
+      ]
+    },
+    {
+      "id": "challenge-grade",
+      "question": "同一道题存在另一种等价解法。",
+      "student": "你刚才这一步判断有误，请重新检查。",
+      "expect": [
+        "重新核查原题和本人作答",
+        "承认可能判断不正确",
+        "保留前后检查记录"
+      ]
+    },
+    {
+      "id": "practice-validation",
+      "question": "根据二次函数最值题生成相近变式。",
+      "expect": [
+        "生成题目和内部参考过程分开",
+        "另一次请求独立校验",
+        "失败或不确定时不展示",
+        "题干不夹带答案"
+      ]
+    },
+    {
+      "id": "review-grounding",
+      "question": "从某日期范围的真实聊天总结复习。",
+      "expect": [
+        "包含旧题续聊",
+        "排除截止后消息",
+        "错误归因有原消息依据",
+        "记录不足明确说明"
+      ],
+      "must_not": [
+        "把常见错误当成学生真实错误",
+        "无依据声称已经掌握"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+.gradle/
+.kotlin/
+.render-check/
+**/build/
+local.properties
+.idea/
+*.jks
+*.keystore
+signing.properties
+.DS_Store
+.toolchains/
+dist/
+*.log
+*.hprof
