@@ -37,8 +37,10 @@ jobs:
             if (!/^v\d+\.\d+\.\d+$/.test(tag) || !/^[a-f0-9]{40}$/.test(blobSha) || !/^[a-f0-9]{64}$/.test(expected)) {
               throw new Error('Invalid release input');
             }
-            const { data: release } = await github.rest.repos.getReleaseByTag({ owner, repo, tag });
-            if (!release.draft) throw new Error('Only draft releases may receive prepared assets');
+            // Draft releases may not yet have a tag ref and are absent from getReleaseByTag.
+            const releases = await github.paginate(github.rest.repos.listReleases, { owner, repo, per_page: 100 });
+            const release = releases.find(item => item.tag_name === tag && item.draft);
+            if (!release) throw new Error('An existing draft release with this tag is required');
             const { data: blob } = await github.rest.git.getBlob({ owner, repo, file_sha: blobSha });
             if (blob.encoding !== 'base64') throw new Error('Unexpected blob encoding');
             const apk = Buffer.from(blob.content, 'base64');
