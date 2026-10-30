@@ -1,0 +1,67 @@
+name: Upload prepared APK to draft release
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: Existing draft release tag
+        required: true
+        default: v0.1.0
+      blob_sha:
+        description: Git blob SHA of the already signed APK (not a tracked source file)
+        required: true
+      apk_sha256:
+        description: Verified SHA-256 of the APK
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify prepared APK and upload release assets
+        uses: actions/github-script@v7
+        env:
+          RELEASE_TAG: ${{ inputs.release_tag }}
+          BLOB_SHA: ${{ inputs.blob_sha }}
+          APK_SHA256: ${{ inputs.apk_sha256 }}
+        with:
+          script: |
+            const crypto = require('node:crypto');
+            const { owner, repo } = context.repo;
+            const tag = process.env.RELEASE_TAG;
+            const blobSha = process.env.BLOB_SHA;
+            const expected = process.env.APK_SHA256;
+            if (!/^v\d+\.\d+\.\d+$/.test(tag) || !/^[a-f0-9]{40}$/.test(blobSha) || !/^[a-f0-9]{64}$/.test(expected)) {
+              throw new Error('Invalid release input');
+            }
+            const { data: release } = await github.rest.repos.getReleaseByTag({ owner, repo, tag });
+            if (!release.draft) throw new Error('Only draft releases may receive prepared assets');
+            const { data: blob } = await github.rest.git.getBlob({ owner, repo, file_sha: blobSha });
+            if (blob.encoding !== 'base64') throw new Error('Unexpected blob encoding');
+            const apk = Buffer.from(blob.content, 'base64');
+            const digest = crypto.createHash('sha256').update(apk).digest('hex');
+            if (digest !== expected || apk.length !== blob.size) throw new Error('APK integrity verification failed');
+            if (apk.readUInt32LE(0) !== 0x04034b50) throw new Error('APK is not a ZIP archive');
+            const filename = `math-tutor-${tag.slice(1)}.apk`;
+            async function upload(name, data, contentType) {
+              const existing = release.assets.find(asset => asset.name === name);
+              const wanted = 'sha256:' + crypto.createHash('sha256').update(data).digest('hex');
+              if (existing) {
+                if (existing.digest !== wanted) throw new Error(`Asset already exists with different or unverifiable content: ${name}`);
+                core.info(`Already uploaded and verified: ${name}`);
+                return;
+              }
+              await github.rest.repos.uploadReleaseAsset({
+                owner, repo, release_id: release.id, name,
+                headers: { 'content-type': contentType, 'content-length': data.length },
+                data,
+              });
+              core.info(`Uploaded: ${name}`);
+            }
+            await upload(filename, apk, 'application/vnd.android.package-archive');
+            await upload('SHA256SUMS.txt', Buffer.from(`${digest}  ${filename}\n`), 'text/plain');
+            core.setOutput('apk_sha256', digest);
+            core.info('Draft assets ready. Publication remains a separate step.');
