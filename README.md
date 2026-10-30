@@ -8,7 +8,11 @@
 
 ## 安装与开始使用
 
-本仓库提供源码，安装包和私有签名材料不纳入 Git。可以按下方开发步骤构建 APK，或在 [GitHub Actions](https://github.com/signed123/Math-Problem-Helper/actions/workflows/android.yml) 成功运行后下载 `android-check-results` 构建产物中的 Debug APK。Debug 包用于测试，不是应用商店发行版。
+**[直接下载 Android 安装包 v0.1.0](https://github.com/signed123/Math-Problem-Helper/releases/download/v0.1.0/math-tutor-0.1.0.apk)** · [发布说明与全部版本](https://github.com/signed123/Math-Problem-Helper/releases) · [SHA-256 校验文件](https://github.com/signed123/Math-Problem-Helper/releases/download/v0.1.0/SHA256SUMS.txt)
+
+适用于 **Android 8.0 及以上**。在手机浏览器下载 APK，打开后按系统提示授予浏览器或文件管理器安装权限即可，无需下载源码或自行编译。当前发布为个人签名的 **Release 试用版**，真实手机及真实百炼效果仍待验证。
+
+安装包放在 GitHub Releases，签名密钥不上传。需要开发或测试时，也可按下方步骤构建，或在 [GitHub Actions](https://github.com/signed123/Math-Problem-Helper/actions/workflows/android.yml) 成功运行后获取 Debug 构建产物。Debug 包与 Releases 安装包使用不同签名和包名。
 
 1. 初次打开默认是**演示模式**，使用固定样例，不会识别、转写或判断真实照片与录音。可先查看界面和学习记录流程。
 2. 在“我的”页面填写**北京地域百炼 API Key**，关闭演示模式并保存，点击“测试已保存的连接”。密钥只在手机通过 Android Keystore 加密保存。
