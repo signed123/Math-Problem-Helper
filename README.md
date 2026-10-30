@@ -1,12 +1,14 @@
-# 数学引导助手
+# Math Problem Helper · 数学引导助手
 
 给高中学生使用的个人安卓学习工具。通过拍题确认、表达思路、分层提示、检查作答、复述总结、变式练习和历史复习，帮助学生自己完成数学题。
 
-本工程使用 Kotlin + Jetpack Compose，最低 Android 8.0。学习记录和照片保存在手机，无自建后端。参考项目仅用于理解设计，未修改六个参考仓库。
+本工程使用 Kotlin + Jetpack Compose，最低 Android 8.0。学习记录和照片保存在手机，App 直接调用阿里云百炼，无自建后端。参考设计与第三方组件说明见 [参考来源](docs/REFERENCES.md)。
+
+**当前状态：0.1.0 个人试用版。** 已完成构建与自动化检查；真机和真实百炼调用尚待验证，详见 [验收记录](docs/VALIDATION.md)。演示模式不代表真实识题或教学效果。
 
 ## 安装与开始使用
 
-安装 [dist/math-tutor-0.1.0.apk](dist/math-tutor-0.1.0.apk)。这是个人试用签名，不是应用商店安装包。已完成构建与自动化检查；真机和真实百炼调用尚待验证，详见[验收记录](docs/VALIDATION.md)。
+本仓库提供源码，安装包和私有签名材料不纳入 Git。可以按下方开发步骤构建 APK，或在 [GitHub Actions](https://github.com/signed123/Math-Problem-Helper/actions/workflows/android.yml) 成功运行后下载 `android-check-results` 构建产物中的 Debug APK。Debug 包用于测试，不是应用商店发行版。
 
 1. 初次打开默认是**演示模式**，使用固定样例，不会识别、转写或判断真实照片与录音。可先查看界面和学习记录流程。
 2. 在“我的”页面填写**北京地域百炼 API Key**，关闭演示模式并保存，点击“测试已保存的连接”。密钥只在手机通过 Android Keystore 加密保存。
@@ -56,11 +58,20 @@ Android 自动备份关闭。更换手机或卸载前请主动导出；在新手
 工具链：JDK 17、Gradle Wrapper 8.9、AGP 8.7.3、Kotlin 2.0.21、Android SDK 35。Android Studio 打开项目后创建 `local.properties` 指定 SDK 路径。
 
 ```bash
+git clone https://github.com/signed123/Math-Problem-Helper.git
+cd Math-Problem-Helper
 ./gradlew :app:assembleDebug :app:testDebugUnitTest :app:lintDebug
+```
+
+Debug APK 输出位置为 `app/build/outputs/apk/debug/app-debug.apk`。安装到测试手机后，在 App 的“我的”页面配置服务；不要将 API Key 填入源码或提交到仓库。
+
+连接模拟器或测试手机后，运行设备级测试：
+
+```bash
 ./gradlew :app:connectedDebugAndroidTest
 ```
 
-第一条运行 JVM、数据库迁移、备份、日期边界和模拟 HTTP 测试；第二条需要已启动模拟器或连接安卓设备。
+构建检查包含 JVM、数据库迁移、备份、日期边界和模拟 HTTP 测试；设备级测试需要已启动模拟器或连接安卓设备。
 
 JVM 测试还包含基于 Robolectric 的生产 Activity / Compose / ViewModel / Room 联合检查；这类检查不替代真机相机、麦克风和真实云模型验证。
 
@@ -88,4 +99,8 @@ python3 scripts/create-signing-key.py
 
 ## Git 版本管理
 
-主分支为 `main`，源码、测试、构建配置和文档纳入版本管理。密钥、私有配置、缓存及 `dist/` 生成文件已排除；当前未配置远程仓库。日常提交与查看历史的方法见 [Git 使用说明](docs/GIT_WORKFLOW.md)。
+主分支为 `main`，远程仓库为 [signed123/Math-Problem-Helper](https://github.com/signed123/Math-Problem-Helper)。源码、测试、构建配置和文档纳入版本管理；密钥、私有配置、缓存及 `dist/` 生成文件已排除。日常提交与查看历史的方法见 [Git 使用说明](docs/GIT_WORKFLOW.md)。
+
+## 许可证
+
+项目采用 [MIT License](LICENSE)。随包的第三方组件保留各自的许可证，见 [第三方组件说明](docs/REFERENCES.md)。

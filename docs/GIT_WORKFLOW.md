@@ -1,6 +1,6 @@
-# 本地 Git 管理
+# Git 版本管理
 
-项目仓库根目录是 `/workspace/math-tutor-android`，主分支为 `main`。六个参考项目分别保留在同级 `reference-projects/`，不属于本仓库。
+主分支为 `main`，远程仓库为 [signed123/Math-Problem-Helper](https://github.com/signed123/Math-Problem-Helper)。本次工作区的仓库根目录是 `/workspace/math-tutor-android`；其他电脑可通过 `git clone` 获取。六个参考项目不属于本仓库。
 
 ## 管理范围
 
@@ -37,6 +37,15 @@ git show 提交编号
 
 ## 远程备份
 
-当前没有配置远程地址，也没有推送到 GitHub。Git 本地提交可以保存版本历史，但不能替代异机备份。以后确定目标仓库后再配置远程并推送。
+`origin` 指向 `https://github.com/signed123/Math-Problem-Helper.git`。首次同步保留了远程初始提交、MIT 许可证和本地实现提交的历史。
+
+后续提交后，可按分支推送：
+
+```bash
+git remote -v
+git push -u origin 当前分支名称
+```
+
+修改源码前先检查 `git status`，拉取远程更新时优先使用 `git pull --ff-only`；若提示分支已分叉，先检查提交差异，再选择合并方式。不要为处理常规同步问题直接强制推送。
 
 首次提交保存当前实现状态。真实百炼调用与设备验收的完成情况以 [验收记录](VALIDATION.md) 为准。
